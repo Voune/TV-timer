@@ -1,0 +1,49 @@
+esphome:
+  name: tv_servo_control
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: "Wifi"
+  password: "####"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Tv Servo Control"
+    password: "####"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  services:
+    - service: control_servo
+      variables:
+        level: float
+      then:
+        - servo.write:
+            id: my_servo
+            level: !lambda 'return level / 100.0;'
+
+ota:
+  password: "####"
+  
+# Example output platform
+# On ESP32, use ledc output
+output:
+  - platform: esp8266_pwm
+    id: pwm_output
+    pin: D1
+    frequency: 50 Hz
+
+    
+# Example configuration entry
+servo:
+  - id: my_servo
+    output: pwm_output
+    min_level: 2.6%
+    idle_level: 7.3%
+    max_level: 12.7%
