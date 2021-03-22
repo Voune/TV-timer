@@ -1,4 +1,4 @@
-- id: '1603219085262'
+- id: '####'
   alias: Write Servo Value to ESP
   trigger:
     platform: state
