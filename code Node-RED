@@ -1,0 +1,1163 @@
+[
+    {
+        "id": "4face828.fe50a8",
+        "type": "tab",
+        "label": "TV-Rum",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "1494451b.2357ab",
+        "type": "inject",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 90,
+        "y": 100,
+        "wires": [
+            [
+                "e6d25660.e58cc8"
+            ]
+        ]
+    },
+    {
+        "id": "e6d25660.e58cc8",
+        "type": "api-current-state",
+        "z": "4face828.fe50a8",
+        "name": "TV-rum",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "media_player.tv_rum",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 220,
+        "y": 100,
+        "wires": [
+            [
+                "9e90a2da.0f00d"
+            ]
+        ]
+    },
+    {
+        "id": "9e90a2da.0f00d",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "func": "if(msg.payload==\"playing\")\n{\n    return [msg,null];\n}\nelse\n{\n    return [null,msg];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "6a511424.bd681c"
+            ],
+            [
+                "1b529be0.0b5c14"
+            ]
+        ],
+        "outputLabels": [
+            "Playing",
+            "Idle"
+        ]
+    },
+    {
+        "id": "6a511424.bd681c",
+        "type": "change",
+        "z": "4face828.fe50a8",
+        "name": "Playing",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "playing",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 80,
+        "wires": [
+            [
+                "129b70c8.1ef3ff"
+            ]
+        ]
+    },
+    {
+        "id": "1b529be0.0b5c14",
+        "type": "change",
+        "z": "4face828.fe50a8",
+        "name": "Idle",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "idle",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 120,
+        "wires": [
+            [
+                "84f17677.27fdc8"
+            ]
+        ]
+    },
+    {
+        "id": "129b70c8.1ef3ff",
+        "type": "api-current-state",
+        "z": "4face828.fe50a8",
+        "name": "Läser in tid",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sensor.tv_tid",
+        "state_type": "num",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 810,
+        "y": 80,
+        "wires": [
+            [
+                "f3d74138.272fd"
+            ]
+        ]
+    },
+    {
+        "id": "238e8764.561488",
+        "type": "ha-entity",
+        "z": "4face828.fe50a8",
+        "name": "TV-tid",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "debugenabled": false,
+        "outputs": 1,
+        "entityType": "sensor",
+        "config": [
+            {
+                "property": "name",
+                "value": "TV tid"
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "min"
+            }
+        ],
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "resend": true,
+        "outputLocation": "",
+        "outputLocationType": "none",
+        "inputOverride": "allow",
+        "x": 390,
+        "y": 220,
+        "wires": [
+            [
+                "db3819f0.2b9a58",
+                "9c681c26.d5b8b"
+            ]
+        ]
+    },
+    {
+        "id": "cacd149b.2c4898",
+        "type": "ha-entity",
+        "z": "4face828.fe50a8",
+        "name": "Tv-tid servo",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "debugenabled": false,
+        "outputs": 1,
+        "entityType": "sensor",
+        "config": [
+            {
+                "property": "name",
+                "value": "tv_tid_servo_control"
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            }
+        ],
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "resend": true,
+        "outputLocation": "",
+        "outputLocationType": "none",
+        "inputOverride": "allow",
+        "x": 870,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9c681c26.d5b8b",
+        "type": "range",
+        "z": "4face828.fe50a8",
+        "minin": "0",
+        "maxin": "60",
+        "minout": "100",
+        "maxout": "-100",
+        "action": "scale",
+        "round": false,
+        "property": "payload",
+        "name": "Range",
+        "x": 550,
+        "y": 220,
+        "wires": [
+            [
+                "cacd149b.2c4898"
+            ]
+        ]
+    },
+    {
+        "id": "ba508ba.f4b1d78",
+        "type": "inject",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "-100",
+        "payloadType": "num",
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [
+                "cacd149b.2c4898"
+            ]
+        ]
+    },
+    {
+        "id": "28015b80.7006a4",
+        "type": "inject",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 690,
+        "y": 300,
+        "wires": [
+            [
+                "cacd149b.2c4898"
+            ]
+        ]
+    },
+    {
+        "id": "97f08169.11966",
+        "type": "inject",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "100",
+        "payloadType": "num",
+        "x": 690,
+        "y": 340,
+        "wires": [
+            [
+                "cacd149b.2c4898"
+            ]
+        ]
+    },
+    {
+        "id": "b4cbe016.bfffd",
+        "type": "api-current-state",
+        "z": "4face828.fe50a8",
+        "name": "Hårdstopp",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "true",
+        "halt_if_type": "bool",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.stoppa_tv_direkt",
+        "state_type": "habool",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 730,
+        "y": 500,
+        "wires": [
+            [
+                "28a57766.b52c88"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "db3819f0.2b9a58",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "TV-tid slut?",
+        "func": "if (msg.payload<1)\n{\n    msg.payload=\"true\";\n}\nelse\n{\n    msg.payload=\"false\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 450,
+        "y": 500,
+        "wires": [
+            [
+                "be2a0ba3.f56108"
+            ]
+        ]
+    },
+    {
+        "id": "be2a0ba3.f56108",
+        "type": "switch",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 590,
+        "y": 500,
+        "wires": [
+            [
+                "b4cbe016.bfffd"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5a16307e.ae0ae",
+        "type": "server-state-changed",
+        "z": "4face828.fe50a8",
+        "name": "Sätt in tid på konto",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_number.satt_in_tv_tid",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "238e8764.561488"
+            ]
+        ]
+    },
+    {
+        "id": "40c187ef.020e08",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "CLOSE",
+        "func": "msg=\n{\n    payload:\n    {\n        type: \"CLOSE\"\n    }\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 960,
+        "y": 560,
+        "wires": [
+            [
+                "bcc7e21e.c250e"
+            ]
+        ]
+    },
+    {
+        "id": "bcc7e21e.c250e",
+        "type": "castv2-sender",
+        "z": "4face828.fe50a8",
+        "name": "TV-rum",
+        "connection": "a014515d.2d193",
+        "spotifyAccessToken": "",
+        "spotifyAccessTokenExpiration": "",
+        "spotifyDeviceName": "",
+        "x": 1120,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "669fbb35.cca214",
+        "type": "switch",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 830,
+        "y": 560,
+        "wires": [
+            [
+                "40c187ef.020e08"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "fcd4684d.1be438",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "PLAY",
+        "func": "msg=\n{\n    payload:\n    {\n        type: \"PLAY\"\n    }\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 950,
+        "y": 480,
+        "wires": [
+            [
+                "bcc7e21e.c250e"
+            ]
+        ]
+    },
+    {
+        "id": "28a57766.b52c88",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "PAUSE",
+        "func": "msg=\n{\n    payload:\n    {\n        type: \"PAUSE\"\n    }\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 960,
+        "y": 520,
+        "wires": [
+            [
+                "bcc7e21e.c250e"
+            ]
+        ]
+    },
+    {
+        "id": "cfa22837.d71828",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "TV-tid slut?",
+        "func": "if (msg.payload<1)\n{\n    msg.payload=\"true\";\n}\nelse\n{\n    msg.payload=\"false\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 690,
+        "y": 560,
+        "wires": [
+            [
+                "669fbb35.cca214"
+            ]
+        ]
+    },
+    {
+        "id": "40b3e550.28df6c",
+        "type": "server-state-changed",
+        "z": "4face828.fe50a8",
+        "name": "TV rum toggle",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.tv_rum_toggle",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "habool",
+        "haltifstate": "true",
+        "halt_if_type": "bool",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 770,
+        "y": 440,
+        "wires": [
+            [
+                "fcd4684d.1be438"
+            ],
+            [
+                "28a57766.b52c88"
+            ]
+        ]
+    },
+    {
+        "id": "ef6e5ac1.1031e8",
+        "type": "api-current-state",
+        "z": "4face828.fe50a8",
+        "name": "Läser in tid",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sensor.tv_tid",
+        "state_type": "num",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 530,
+        "y": 560,
+        "wires": [
+            [
+                "cfa22837.d71828"
+            ]
+        ]
+    },
+    {
+        "id": "bf656c21.b1a38",
+        "type": "switch",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 370,
+        "y": 560,
+        "wires": [
+            [
+                "ef6e5ac1.1031e8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a16a55e3.212bf8",
+        "type": "inject",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 370,
+        "y": 600,
+        "wires": [
+            [
+                "ef6e5ac1.1031e8"
+            ]
+        ]
+    },
+    {
+        "id": "113cc81f.56c118",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "Avsnitt slut?",
+        "func": "if (msg.payload==\"idle\")\n{\n    msg.payload=\"true\";\n}\nelse\n{\n    msg.payload=\"false\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 230,
+        "y": 560,
+        "wires": [
+            [
+                "bf656c21.b1a38"
+            ]
+        ]
+    },
+    {
+        "id": "44e51dea.22cb54",
+        "type": "inject",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 90,
+        "y": 520,
+        "wires": [
+            [
+                "113cc81f.56c118"
+            ]
+        ]
+    },
+    {
+        "id": "328078cf.808f08",
+        "type": "server-state-changed",
+        "z": "4face828.fe50a8",
+        "name": "TV-rum",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "media_player.tv_rum",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 70,
+        "y": 560,
+        "wires": [
+            [
+                "113cc81f.56c118"
+            ]
+        ],
+        "outputLabels": [
+            "TV-tid slut",
+            ""
+        ],
+        "icon": "node-red-contrib-cast/cast-cli1.svg"
+    },
+    {
+        "id": "6f3917d8.b50aa8",
+        "type": "api-call-service",
+        "z": "4face828.fe50a8",
+        "name": "TV rum toggle",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "toggle",
+        "entityId": "input_boolean.tv_rum_toggle",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 320,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1639852d.b9083b",
+        "type": "link in",
+        "z": "4face828.fe50a8",
+        "name": "IKEA Remote Start",
+        "links": [
+            "5ff49913.f52408"
+        ],
+        "x": 120,
+        "y": 660,
+        "wires": [
+            [
+                "6f3917d8.b50aa8"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "b6ff03a0.485cd",
+        "type": "cast-to-client",
+        "z": "4face828.fe50a8",
+        "name": "TV-rum",
+        "url": "",
+        "contentType": "",
+        "message": "",
+        "language": "en",
+        "ip": "192.168.1.118",
+        "port": "8009",
+        "volume": "",
+        "x": 350,
+        "y": 720,
+        "wires": [
+            [
+                "dc2d84f9.fa7678"
+            ]
+        ]
+    },
+    {
+        "id": "dc2d84f9.fa7678",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "Höj volym",
+        "func": "var vol=msg.payload.volume.level*100;\nvol=parseFloat(vol.toFixed(0))\n\nif (vol<100)\n{\n    vol=vol+10;\n}\nmsg.payload.volume=vol;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 490,
+        "y": 720,
+        "wires": [
+            [
+                "c37df353.9b04e"
+            ]
+        ]
+    },
+    {
+        "id": "c37df353.9b04e",
+        "type": "cast-to-client",
+        "z": "4face828.fe50a8",
+        "name": "TV-rum",
+        "url": "",
+        "contentType": "",
+        "message": "",
+        "language": "en",
+        "ip": "192.168.1.118",
+        "port": "8009",
+        "volume": "",
+        "x": 630,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c9b3d9ad.fd8f58",
+        "type": "cast-to-client",
+        "z": "4face828.fe50a8",
+        "name": "TV-rum",
+        "url": "",
+        "contentType": "",
+        "message": "",
+        "language": "en",
+        "ip": "192.168.1.118",
+        "port": "8009",
+        "volume": "",
+        "x": 350,
+        "y": 780,
+        "wires": [
+            [
+                "f5c66364.7c298"
+            ]
+        ]
+    },
+    {
+        "id": "f5c66364.7c298",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "Sänk volym",
+        "func": "var vol=msg.payload.volume.level*100;\nvol=parseFloat(vol.toFixed(0))\n\nif (vol>0)\n{\n    vol=vol-10;\n}\nmsg.payload.volume=vol;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 500,
+        "y": 780,
+        "wires": [
+            [
+                "a2fc34e8.6cb588"
+            ]
+        ]
+    },
+    {
+        "id": "a2fc34e8.6cb588",
+        "type": "cast-to-client",
+        "z": "4face828.fe50a8",
+        "name": "TV-rum",
+        "url": "",
+        "contentType": "",
+        "message": "",
+        "language": "en",
+        "ip": "192.168.1.118",
+        "port": "8009",
+        "volume": "",
+        "x": 650,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b2929bcb.9f3d48",
+        "type": "link in",
+        "z": "4face828.fe50a8",
+        "name": "IKEA Remote Upp",
+        "links": [
+            "fce5289f.b58658"
+        ],
+        "x": 120,
+        "y": 720,
+        "wires": [
+            [
+                "b6ff03a0.485cd"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "ae60057c.6ee478",
+        "type": "link in",
+        "z": "4face828.fe50a8",
+        "name": "IKEA Remote Ner",
+        "links": [
+            "4422bfeb.9ad03"
+        ],
+        "x": 120,
+        "y": 780,
+        "wires": [
+            [
+                "c9b3d9ad.fd8f58"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "fce95bcf.232e58",
+        "type": "api-current-state",
+        "z": "4face828.fe50a8",
+        "name": "Läser in tid",
+        "server": "7e5d25e0.e3ef1c",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sensor.tv_tid",
+        "state_type": "num",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 810,
+        "y": 140,
+        "wires": [
+            [
+                "5f5e8986.93de98"
+            ]
+        ]
+    },
+    {
+        "id": "84f17677.27fdc8",
+        "type": "time-range-switch",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "startTime": "07:00",
+        "endTime": "18:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 650,
+        "y": 140,
+        "wires": [
+            [
+                "fce95bcf.232e58"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "99d74efb.b966d",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "inc/dec",
+        "func": "var sum=msg.payload\nsum=parseFloat(sum.toFixed(1))\n\nif (msg.topic==\"playing\")\n{\n    if (sum>0)\n    {\n        sum=sum-1;\n    }\n    else\n    {\n        sum=0;\n    }\n}\nif (msg.topic==\"idle\")\n{\n\n    if (sum<90)\n    {\n        sum=sum+0.5;\n    }\n    else\n    {\n        sum=90;\n    }\n\n}\n\nsum=parseFloat(sum.toFixed(1))\nmsg.payload=sum\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1020,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f3d74138.272fd",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "dec",
+        "func": "var sum=msg.payload\nsum=parseFloat(sum.toFixed(1))\n\nif (sum>0)\n{\n    sum=sum-1;\n}\nelse\n{\n    sum=0;\n}\n\nsum=parseFloat(sum.toFixed(1))\nmsg.payload=sum\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 950,
+        "y": 80,
+        "wires": [
+            [
+                "13592142.169dff"
+            ]
+        ]
+    },
+    {
+        "id": "5f5e8986.93de98",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "inc",
+        "func": "var sum=msg.payload\nsum=parseFloat(sum.toFixed(1))\n\nif (sum<60)\n{\n    sum=sum+1/3;\n}\nelse\n{\n    sum=60;\n}\n\nsum=parseFloat(sum.toFixed(1))\nmsg.payload=sum\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 950,
+        "y": 140,
+        "wires": [
+            [
+                "13592142.169dff"
+            ]
+        ]
+    },
+    {
+        "id": "13592142.169dff",
+        "type": "function",
+        "z": "4face828.fe50a8",
+        "name": "Merge",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1070,
+        "y": 120,
+        "wires": [
+            [
+                "238e8764.561488"
+            ]
+        ]
+    },
+    {
+        "id": "78d0c23b.849f4c",
+        "type": "inject",
+        "z": "4face828.fe50a8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "15",
+        "payloadType": "num",
+        "x": 210,
+        "y": 320,
+        "wires": [
+            [
+                "238e8764.561488"
+            ]
+        ]
+    },
+    {
+        "id": "a72b9b08.ae6c98",
+        "type": "comment",
+        "z": "4face828.fe50a8",
+        "name": "Reserv",
+        "info": "",
+        "x": 1010,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "7e5d25e0.e3ef1c",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "addon": true
+    },
+    {
+        "id": "a014515d.2d193",
+        "type": "castv2-connection",
+        "z": "",
+        "name": "",
+        "target": "",
+        "host": "192.168.1.117",
+        "port": "8009"
+    }
+]
